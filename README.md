@@ -1,4 +1,4 @@
-# SPA with Node.js.
+# SPA with Node.js and Angular5
  
 ## Application __back-end__- Server
   * Server -> **Express.js**, __*Based on the MVC design pattern*__
