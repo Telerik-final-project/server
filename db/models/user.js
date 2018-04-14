@@ -50,12 +50,13 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     }, {
-        charset: 'utf8',
-        collate: 'utf8_unicode_ci',
-    });
+            charset: 'utf8',
+            collate: 'utf8_unicode_ci',
+        });
 
     Users.associate = (models) => {
-        const {} = models;
+        const { } = models;
     };
+
     return Users;
 };

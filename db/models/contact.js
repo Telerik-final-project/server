@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
+        isDeleted: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false,
+        },
     }, {
             charset: 'utf8',
             collate: 'utf8_unicode_ci',
