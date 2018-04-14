@@ -30,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
                 max: 10,
             },
         },
-        
     }, {
             charset: 'utf8',
             collate: 'utf8_unicode_ci',
