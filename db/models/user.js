@@ -45,17 +45,20 @@ module.exports = (sequelize, DataTypes) => {
                 max: 100,
             },
         },
-        role_id: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
     }, {
             charset: 'utf8',
             collate: 'utf8_unicode_ci',
         });
 
     Users.associate = (models) => {
-        const { } = models;
+        const {
+            Roles,
+        } = models;
+
+        Users.belongsTo(Roles, {
+            foreignKey: 'role_id',
+            onDelete: 'CASCADE',
+        });
     };
 
     return Users;
