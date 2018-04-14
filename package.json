@@ -4,7 +4,8 @@
   "description": "* Server -> **Express.js**, __*Based on the MVC design pattern*__   * Database -> **MariaDB**    * ORM -> **Sequelize**   * Users authenticatication -> **Passport.js**",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app/server.js"
   },
   "repository": {
     "type": "git",
@@ -24,12 +25,10 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "lodash": "^4.17.5",
     "morgan": "^1.9.0",
     "mysql2": "^1.5.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pug": "^2.0.1",
     "sequelize": "^4.37.1",
     "sequelize-auto-migrations": "^1.0.2",
     "sequelize-cli": "^4.0.0"
