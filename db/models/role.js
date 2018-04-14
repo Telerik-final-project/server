@@ -11,13 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             collate: 'utf8_unicode_ci',
         });
 
-    Roles.associate = (models) => {
-        const {
-            Users,
-        } = models;
-
-       
-    };
+    Roles.associate = (models) => { };
 
     return Roles;
 };

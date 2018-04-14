@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'job_offer_id',
             onDelete: 'CASCADE',
         });
+
         Applications.belongsTo(Users, {
             foreignKey: 'user_id',
             onDelete: 'CASCADE',

@@ -40,9 +40,7 @@ module.exports = (sequelize, DataTypes) => {
             collate: 'utf8_unicode_ci',
         });
 
-    JobOffers.associate = (models) => {
-        const { } = models;
-    };
+    JobOffers.associate = (models) => { };
 
     return JobOffers;
 };
