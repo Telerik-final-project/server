@@ -24,12 +24,24 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     }, {
-            charset: 'utf8',
-            collate: 'utf8_unicode_ci',
-        });
+        charset: 'utf8',
+        collate: 'utf8_unicode_ci',
+    });
 
     Applications.associate = (models) => {
-        const { } = models;
+        const {
+            JobOffers,
+            Users,
+        } = models;
+
+        Applications.belongsTo(JobOffers, {
+            foreignKey: 'job_offer_id',
+            onDelete: 'CASCADE',
+        });
+        Applications.belongsTo(Users, {
+            foreignKey: 'user_id',
+            onDelete: 'CASCADE',
+        });
     };
 
     return Applications;
