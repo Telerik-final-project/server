@@ -8,7 +8,7 @@ const app = express();
 customExpress.init(app);
 
 // Global Vars
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.locals.user = req.user || null;
     next();
 });
