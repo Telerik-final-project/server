@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./app/server.js",
     "unit-tests": "./node_modules/.bin/mocha",
-    "add-migration": "node ./node_modules/sequelize-auto-migrations/bin/makemigration.js",
-    "migrate": "./node_modules/.bin/sequelize db:migrate",
+    "add-migration": "cd db && node ../node_modules/sequelize-auto-migrations/bin/makemigration.js",
+    "migrate": "cd db && ../node_modules/.bin/sequelize db:migrate",
     "seed": "./node_modules/.bin/sequelize db:seed:all"
   },
   "repository": {
