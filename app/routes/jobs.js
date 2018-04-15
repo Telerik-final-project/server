@@ -5,42 +5,77 @@ const {
 const passport = require('passport');
 const validator = require('express-validator');
 
+const {
+    JobsController,
+    UsersController,
+} = require('../controllers/index');
+
 const init = (app, data) => {
+    const jobsController = new JobsController(data);
+    const usersController = new UsersController(data);
+
     const router = new Router();
     router
-        .get('/', (req, res) => {
-            const context = {};
+        .get('/', async (req, res) => {
+            const jobj = await jobsController.getAllJobAds();
+            const context = { jobj };
 
             res.send(context);
         })
-        .get('/:id', (req, res) => {
-            const context = {};
+        .get('/:id', async (req, res) => {
+            const id = +req.params.id;
+            const job = await jobsController.getJobAdById(id);
+
+            const context = { job };
 
             res.send(context);
         })
-        .get('/applications/:id', (req, res) => {
-            const context = {};
+        .get('/applications/:id', async (req, res) => { // applicants per id
+            const jobID = +req.params.id;
+            const applicants =
+                await usersController.getUsersPerJobOffer(jobID);
+
+            const context = { applicants };
 
             res.send(context);
         })
-        .get('/create', (req, res) => {
-            const context = {};
+        .post('/create', async (req, res) => {
+            const newJobOffer = req.body;
+            try {
+                await jobsController.createJobAd(newJobOffer);
+                res.status(200);
+            } catch (err) {
+                res.send({ errMsg: err.message });
+            }
+        })
+        .get('/edit', async (req, res) => {
+            const id = 1; // will be changed
+            const offerInfoToDisplay =
+                await jobsController.getJobAdById(+id);
+
+            const context = { offerInfoToDisplay };
 
             res.send(context);
         })
-        .post('/create', (req, res) => {
-            res.status(200);
-        })
-        .get('/edit', (req, res) => {
-            const context = {};
+        .post('/edit', async (req, res) => {
+            try {
+                const jobOfferParams = req.body;
+                const info = [...jobOfferParams];
+                await jobsController.updateJobAd(info);
 
-            res.send(context);
+                res.status(200);
+            } catch (err) {
+                res.send({ errMsg: err.message });
+            }
         })
-        .post('/edit', (req, res) => {
-            res.status(200);
-        })
-        .delete('/delete', (req, res) => {
-            res.status(200);
+        .delete('/delete', async (req, res) => {
+            const id = 1; // will be changed
+            try {
+                await jobsController.deleteJobAd();
+                res.status(200);
+            } catch (err) {
+                res.send({ errMsg: err.message });
+            }
         });
 
     console.log('JOBS HERE', router);
