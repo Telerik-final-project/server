@@ -16,30 +16,17 @@ class ContactsController {
         return contacts;
     }
 
-    async getContactsById(id) {
+    async getContactInfoById(id) {
         let contacts;
 
         try {
-            contacts = await this.data.contacts.getById(id);
+            contacts = await this.data.contacts.getById(+id);
         } catch (err) {
             console.log(err);
             throw err;
         }
 
         return contacts;
-    }
-
-    async getContactInfoById(id) {
-        let contact;
-
-        try {
-            contact = await this.data.contacts.getById(+id);
-        } catch (err) {
-            console.log(err);
-            throw err;
-        }
-
-        return contact;
     }
 
     async createContacts(data) {
