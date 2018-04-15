@@ -63,8 +63,8 @@ const init = (app, data) => {
             res.status(200);
         });
 
-    app.use('/admin');
-};
+        app.use('/admin', router);
+    };
 
 module.exports = {
     init,

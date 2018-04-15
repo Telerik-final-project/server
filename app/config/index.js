@@ -1,6 +1,6 @@
 const secret = '';
 /* eslint-disable */
-const port = process.env.PORT || 3006;
+const port = process.env.PORT || 3012;
 
 const dbConnectionString = process.env.NODE_ENV = 'development';
     // ? 'cloud path'

@@ -44,8 +44,8 @@ const init = (app, data) => {
             res.status(200);
         });
 
-    app.use('/jobs');
-};
+        app.use('/jobs', router);
+    };
 
 module.exports = {
     init,

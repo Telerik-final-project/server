@@ -20,7 +20,7 @@ const init = (app, data) => {
             res.send(context);
         });
 
-    app.use('/user');
+    app.use('/user', router);
 };
 
 module.exports = {

@@ -25,6 +25,8 @@ const init = (app, data) => {
             req.logout();
             res.status(200);
         });
+
+    app.use('/', router);
 };
 
 module.exports = {
