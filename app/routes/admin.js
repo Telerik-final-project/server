@@ -2,32 +2,48 @@ const {
     Router,
 } = require('express');
 
+const {
+    JobsController,
+    ApplicationsController,
+    ButtonsController,
+    ContactsController,
+    UsersController,
+} = require('../controllers/index');
+
 const passport = require('passport');
 const validator = require('express-validator');
 
 const init = (app, data) => {
+    const jobsController = new JobsController(data);
+    const applicationsController = new ApplicationsController(data);
+    const buttonsController = new ButtonsController(data);
+    const contactsController = new ContactsController(data);
+    const usersController = new UsersController(data);
+
     const router = new Router();
     router
-        .get('/users', (req, res) => {
-            const context = {};
+        .get('/users', async (req, res) => {
+            const users = await usersController.getAllUsersData();
+            const context = { users };
 
             res.send(context);
         })
-        .get('/contacts', (req, res) => {
-            const context = {};
+        .get('/contacts', async (req, res) => {
+            const contacts = await contactsController.getAllContacts();
+            const context = { contacts };
 
             res.send(context);
         })
-        .get('/contacts/create', (req, res) => {
-            const context = {};
+        .post('/contacts/create', async (req, res) => {
+            const newContact = req.body;
+            contactsController.createContacts(newContact);
 
-            res.send(context);
-        })
-        .post('/contacts/create', (req, res) => {
             res.status(200);
         })
-        .get('/contacts/edit', (req, res) => {
-            const context = {};
+        .get('/contacts/edit', async (req, res) => {
+            const id = 1; // will be changed
+            const contactInfoToDisplay = await contactsController.getContactInfoById();
+            const context = { contactInfoToDisplay };
 
             res.send(context);
         })
@@ -37,16 +53,13 @@ const init = (app, data) => {
         .delete('/contacts/delete', (req, res) => {
             res.status(200);
         })
-        .get('/buttons', (req, res) => {
-            const context = {};
+        .get('/buttons', async (req, res) => {
+            const buttons = await buttonsController.getAllButtons();
+            const context = { buttons };
 
             res.send(context);
         })
-        .get('/buttons/create', (req, res) => {
-            const context = {};
 
-            res.send(context);
-        })
         .post('/buttons/create', (req, res) => {
             res.status(200);
         })

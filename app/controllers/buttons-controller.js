@@ -1,4 +1,4 @@
-class ButtonController {
+class ButtonsController {
     constructor(data) {
         this.data = data;
     }
@@ -50,4 +50,4 @@ class ButtonController {
     }
 }
 
-module.exports = ButtonController;
+module.exports = ButtonsController;
