@@ -14,8 +14,6 @@ const passport = require('passport');
 const validator = require('express-validator');
 
 const init = (app, data) => {
-    const jobsController = new JobsController(data);
-    const applicationsController = new ApplicationsController(data);
     const buttonsController = new ButtonsController(data);
     const contactsController = new ContactsController(data);
     const usersController = new UsersController(data);
@@ -36,21 +34,30 @@ const init = (app, data) => {
         })
         .post('/contacts/create', async (req, res) => {
             const newContact = req.body;
-            contactsController.createContacts(newContact);
+            await contactsController.createContacts(newContact);
 
             res.status(200);
         })
         .get('/contacts/edit', async (req, res) => {
             const id = 1; // will be changed
-            const contactInfoToDisplay = await contactsController.getContactInfoById();
+            const contactInfoToDisplay =
+                await contactsController.getContactInfoById(id);
+
             const context = { contactInfoToDisplay };
 
             res.send(context);
         })
-        .post('/contacts/edit', (req, res) => {
+        .post('/contacts/edit', async (req, res) => {
+            const contactInfo = req.body;
+            const info = [...contactInfo];
+            await contactsController.updateContacts(info);
+
             res.status(200);
         })
-        .delete('/contacts/delete', (req, res) => {
+        .delete('/contacts/delete', async (req, res) => {
+            const id = 1; // will be changed
+            await contactsController.deleteContacts(id);
+
             res.status(200);
         })
         .get('/buttons', async (req, res) => {
@@ -59,19 +66,32 @@ const init = (app, data) => {
 
             res.send(context);
         })
+        .post('/buttons/create', async (req, res) => {
+            const newButton = req.body;
+            buttonsController.createButton(newButton);
 
-        .post('/buttons/create', (req, res) => {
             res.status(200);
         })
-        .get('/buttons/edit', (req, res) => {
-            const context = {};
+        .get('/buttons/edit', async (req, res) => {
+            const id = 1; // will be changed
+            const buttonInfoToDisplay =
+                await buttonsController.getButtonById(id);
+
+            const context = { buttonInfoToDisplay };
 
             res.send(context);
         })
-        .post('/buttons/edit', (req, res) => {
+        .post('/buttons/edit', async (req, res) => {
+            const buttonInfo = req.body;
+            const info = [...buttonInfo];
+            await buttonsController.updateButton(info);
+
             res.status(200);
         })
-        .delete('/buttons/delete', (req, res) => {
+        .delete('/buttons/delete', async (req, res) => {
+            const id = 1; // will be changed
+            await buttonsController.deleteButton(id);
+
             res.status(200);
         });
 
