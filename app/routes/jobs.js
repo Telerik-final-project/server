@@ -17,8 +17,8 @@ const init = (app, data) => {
     const router = new Router();
     router
         .get('/', async (req, res) => {
-            const jobj = await jobsController.getAllJobAds();
-            const context = { jobj };
+            const jobs = await jobsController.getAllJobAds();
+            const context = { jobs };
 
             res.send(context);
         })
