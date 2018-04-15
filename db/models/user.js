@@ -45,6 +45,11 @@ module.exports = (sequelize, DataTypes) => {
                 max: 100,
             },
         },
+        isDeleted: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            allowNull: false,
+        },
     }, {
             charset: 'utf8',
             collate: 'utf8_unicode_ci',
