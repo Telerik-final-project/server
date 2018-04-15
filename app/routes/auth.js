@@ -7,7 +7,6 @@ const validator = require('express-validator');
 
 const init = (app, data) => {
     const router = new Router();
-
     router
         .get('/login', (req, res) => {
             res.status(200);
@@ -26,6 +25,7 @@ const init = (app, data) => {
             res.status(200);
         });
 
+    console.log('AUTH HERE', router);
     app.use('/', router);
 };
 

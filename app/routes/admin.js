@@ -7,7 +7,6 @@ const validator = require('express-validator');
 
 const init = (app, data) => {
     const router = new Router();
-
     router
         .get('/users', (req, res) => {
             const context = {};
@@ -63,8 +62,9 @@ const init = (app, data) => {
             res.status(200);
         });
 
-        app.use('/admin', router);
-    };
+    console.log('ADMIN HERE', router);
+    app.use('/admin', router);
+};
 
 module.exports = {
     init,
