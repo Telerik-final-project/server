@@ -16,6 +16,19 @@ class ButtonController {
         return buttons;
     }
 
+    async getButtonById(id) {
+        let button;
+
+        try {
+            button = await this.data.buttons.getById(id);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return button;
+    }
+
     async createButton(data) {
         try {
             await this.data.buttons.create(data);

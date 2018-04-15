@@ -4,16 +4,29 @@ class ContactsController {
     }
 
     async getAllContacts() {
-        let buttons;
+        let contacts;
 
         try {
-            buttons = await this.data.contacts.getAll();
+            contacts = await this.data.contacts.getAll();
         } catch (err) {
             console.log(err);
             throw err;
         }
 
-        return buttons;
+        return contacts;
+    }
+
+    async getContactsById(id) {
+        let contacts;
+
+        try {
+            contacts = await this.data.contacts.getById(id);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return contacts;
     }
 
     async createContacts(data) {

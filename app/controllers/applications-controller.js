@@ -21,8 +21,4 @@ class ApplicationsController {
     async downloadCoverLetter() {}
 }
 
-const data = require('../data');
-const ac = new ApplicationsController(data);
-ac.getAllApplications().then((res) => console.log(res));
-
 module.exports = ApplicationsController;
