@@ -3,8 +3,6 @@ const {
 } = require('express');
 
 const {
-    JobsController,
-    ApplicationsController,
     ButtonsController,
     ContactsController,
     UsersController,

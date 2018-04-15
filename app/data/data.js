@@ -9,9 +9,10 @@ const {
 } = require('../../db/models');
 
 const ApplicationsData = require('./applications-data');
+const UsersData = require('./users-data');
 
 module.exports = {
-    users: new Data(Users),
+    users: new UsersData(Users),
     roles: new Data(Roles),
     buttons: new Data(Buttons),
     contacts: new Data(Contacts),
