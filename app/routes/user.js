@@ -7,7 +7,6 @@ const validator = require('express-validator');
 
 const init = (app, data) => {
     const router = new Router();
-
     router.
         get('/careers', (req, res) => {
             const context = {};
@@ -20,6 +19,7 @@ const init = (app, data) => {
             res.send(context);
         });
 
+    console.log('USER HERE', router);
     app.use('/user', router);
 };
 

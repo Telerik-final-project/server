@@ -2,7 +2,7 @@ const express = require('express');
 
 const config = require('./config');
 const customExpress = require('./config/express');
-const routers = require('./routers/index');
+const routers = require('./routes/index');
 const data = require('./data/index');
 
 const app = express();

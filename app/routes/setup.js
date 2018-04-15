@@ -8,7 +8,6 @@ const init = (app, data) => {
     fs.readdirSync(__dirname)
         .filter((filename) => filename !== path.basename(__filename))
         .filter((filename) => filename !== 'index.js')
-        // relative -> absolute path
         .map((filename) => path.join(__dirname, filename))
         .forEach((modulePath) => {
             const route = require(modulePath);
