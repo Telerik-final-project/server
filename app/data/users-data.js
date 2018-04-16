@@ -10,7 +10,7 @@ class UsersData extends Data {
         super(Users);
     }
 
-    async checkUserExistance(email) {
+    async checkUserExistence(email) {
         const result = await this.Model.findOne({
             where: {
                 email: email,
