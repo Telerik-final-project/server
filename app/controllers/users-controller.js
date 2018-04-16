@@ -16,7 +16,7 @@ class UsersController {
             let applications;
             try {
                 applications = await this.data.
-                applications.getApplicationsByUserId(user.id);
+                    applications.getApplicationsByUserId(user.id);
             } catch (err) {
                 console.log(err);
                 throw err;
@@ -33,6 +33,46 @@ class UsersController {
         });
 
         return users;
+    }
+
+    async getUserById(id) {
+        let button;
+
+        try {
+            button = await this.data.users.getById(+id);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return button;
+    }
+
+    async ifUserExists(email) {
+        let user;
+
+        try {
+            user = await this.data.users.checkUserExistance(email);
+            if (user[0]) {
+                return true;
+            }
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return false;
+    }
+
+    async createUser(data) {
+        try {
+            await this.data.users.create(data);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return true;
     }
 }
 

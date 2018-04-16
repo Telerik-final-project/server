@@ -29,6 +29,14 @@ class JobsController {
         return ad;
     }
 
+    /**
+      * @description Get a row from table by given id.
+      * @param id number
+      * @param data array form objects with arttribute
+      * and value to update
+      * @return Returns db object with id = id parameter.
+     */
+
     async updateJobAd(id, data) {
         try {
             await this.data.jobOffers.update(id, data);

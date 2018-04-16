@@ -1,4 +1,4 @@
-class ButtonController {
+class ButtonsController {
     constructor(data) {
         this.data = data;
     }
@@ -40,6 +40,14 @@ class ButtonController {
         return true;
     }
 
+   /**
+     * @description Get a row from table by given id.
+     * @param id number
+     * @param data array form objects with arttribute
+     * and value to update
+     * @return Returns db object with id = id parameter.
+    */
+
     async updateButton(id, data) {
         try {
             await this.data.buttons.update(id, data);
@@ -63,4 +71,4 @@ class ButtonController {
     }
 }
 
-module.exports = ButtonController;
+module.exports = ButtonsController;
