@@ -10,8 +10,7 @@ const data = require('../data/index');
 const usersController = new UsersController(data);
 
 class AuthController {
-    constructor(users) {
-        this.users = users;
+    constructor() {
     }
 
     get isAuth() {
