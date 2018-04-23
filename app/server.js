@@ -24,7 +24,8 @@ app.use(bodyParser.json());
     const usersController = new UsersController(data);
     const users = await usersController.getAllUsersData();
 
-    passport.use(strategy.create(users));
+    console.log(users);
+    passport.use(await strategy.init(users));
 })();
 
 // app.use('/', authRoutes.create({ users }));

@@ -2,18 +2,19 @@ const {
     Router,
 } = require('express');
 
-const AuthController = require('./../../controllers/auth.controller');
+const AuthController = require('../controllers/auth-controller');
 
 const router = new Router();
 
-const init = () => {
+const init = (app) => {
     const authController = new AuthController();
 
     router
-        .post('/api/register', authController.register)
-        .post('/api/login', authController.login);
+        .post('/register', (req, res) => authController.register)
+        .post('/login', (req, res) => authController.login);
 
-    return router;
+    console.log('AUTH HERE', app);
+    app.use('/api', router);
 };
 
 module.exports = {

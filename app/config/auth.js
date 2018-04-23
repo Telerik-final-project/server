@@ -3,7 +3,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const config = require('../config');
 
-let opt = {
+const opt = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.JWT_SECRET,
     issuer: config.JWT_ISS,
@@ -12,14 +12,18 @@ let opt = {
 const UsersController = require('../controllers/users-controller');
 const data = require('../data/index');
 
-console.log(data);
 const usersController = new UsersController(data);
 
 const init = (users) => {
     return new JwtStrategy(opt, (_jwtPayload, done) => {
         console.log(_jwtPayload);
 
-        // const dbUser =  
+        // const user = await usersController.getUserById();
+
+        if (false) {
+            return done(null, user);
+        }
+        return done('Not authenticated', false);
     });
 };
 
