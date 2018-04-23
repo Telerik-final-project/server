@@ -52,7 +52,7 @@ class UsersController {
         let user;
 
         try {
-            user = await this.data.users.checkUserExistance(email);
+            user = await this.data.users.checkUserExistence(email);
             if (user[0]) {
                 return true;
             }
