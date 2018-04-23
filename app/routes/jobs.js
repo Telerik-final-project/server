@@ -2,9 +2,6 @@ const {
     Router,
 } = require('express');
 
-const passport = require('passport');
-const validator = require('express-validator');
-
 const {
     JobsController,
     UsersController,
@@ -79,7 +76,7 @@ const init = (app, data) => {
         });
 
     console.log('JOBS HERE', router);
-    app.use('/jobs', router);
+    app.use('/api/jobs', router);
 };
 
 module.exports = {

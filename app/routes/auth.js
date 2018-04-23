@@ -53,7 +53,7 @@ const init = (app, data) => {
         });
 
     console.log('AUTH HERE', router);
-    app.use('/', router);
+    app.use('/api', router);
 };
 
 module.exports = {

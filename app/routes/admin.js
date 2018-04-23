@@ -94,7 +94,7 @@ const init = (app, data) => {
         });
 
     console.log('ADMIN HERE', router);
-    app.use('/admin', router);
+    app.use('/api/admin', router);
 };
 
 module.exports = {

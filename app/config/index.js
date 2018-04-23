@@ -1,14 +1,20 @@
-const secret = '';
-/* eslint-disable */
-const port = process.env.PORT || 3012;
+const config = (function() {
+    const PORT = 8000;
+    const JWT_SECRET = 'xxx';
+    const JWT_ISS = 'telerik';
+    const JWT_EXPIRE_TIME = 60 * 60; // in seconds
 
-const dbConnectionString = process.env.NODE_ENV = 'development';
-    // ? 'cloud path'
-    // : 'local path';
-/* eslint-enable */
+    return {
+        PORT,
+        JWT_SECRET,
+        JWT_ISS,
+        JWT_EXPIRE_TIME,
+    };
+}());
 
 module.exports = {
-    port,
-    secret,
-    dbConnectionString,
+    PORT: config.PORT,
+    JWT_SECRET: config.JWT_SECRET,
+    JWT_ISS: config.JWT_ISS,
+    JWT_EXPIRE_TIME: config.JWT_EXPIRE_TIME,
 };
