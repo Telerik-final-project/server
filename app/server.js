@@ -11,7 +11,6 @@ const strategy = require('./config/auth');
 
 const UsersController = require('./controllers/users-controller');
 const data = require('./data/index');
-const cors = require('cors');
 
 const app = express();
 

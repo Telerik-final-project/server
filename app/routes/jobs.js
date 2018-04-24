@@ -2,6 +2,8 @@ const {
     Router,
 } = require('express');
 
+const multer = require('multer');
+
 const {
     JobsController,
     UsersController,
@@ -10,6 +12,15 @@ const {
 const init = (app, data) => {
     const jobsController = new JobsController(data);
     const usersController = new UsersController(data);
+    const storage = multer.diskStorage({
+        destination: (req, file, cb) => {
+          cb(null, './uploads');
+        },
+        filename: (req, file, cb) => {
+          cb(null, file.fieldname + '-' + Date.now());
+        },
+    });
+    const upload = multer({ storage });
 
     const router = new Router();
     router
@@ -35,6 +46,10 @@ const init = (app, data) => {
             const context = { applicants };
 
             res.send(context);
+        })
+        .post('/upload', upload.single('file'), (req, res) => {
+            console.log(req.file)
+            res.json({'message': 'File uploaded successfully'});
         })
         .post('/create', async (req, res) => {
             const newJobOffer = req.body;
