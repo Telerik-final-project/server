@@ -17,7 +17,7 @@ class AuthController {
 
     }
 
-    get login() {
+    login() {
         return async (req, res) => {
             const id = +req.body.id;
             const user = await usersController.getUserById(id);
@@ -61,37 +61,42 @@ class AuthController {
         };
     }
 
-    get register() {
+    register() {
         return async (req, res) => {
             const id = +req.body.id;
-            const user = await usersController.getUserById(id);
-            if (!user) {
-                const newUser = {
-                    id: uuid(),
-                    email: req.body.email,
-                    password: '',
-                };
+            // const user = await usersController.getUserById(id);
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
+            res.send({message: 'Done it!'});
 
-                try {
-                    bcrypt.hash(req.body.password, null, null, (err, hash) => {
-                        newUser.password = hash;
-                    });
+            // console.log(req.body);
+            // if (!user) {
+            //     const newUser = {
+            //         id: uuid(),
+            //         email: req.body.email,
+            //         password: '',
+            //     };
 
-                    usersController.createUser(newUser);
+            //     try {
+            //         bcrypt.hash(req.body.password, null, null, (err, hash) => {
+            //             newUser.password = hash;
+            //         });
 
-                    res.status(200).send({
-                        msg: 'User created!',
-                    });
-                } catch (err) {
-                    res.status(500).send({
-                        msg: 'The server encountered an unexpected condition!',
-                    });
-                }
-            } else {
-                res.status(401).send({
-                    msg: 'User already exist',
-                });
-            }
+            //         usersController.createUser(newUser);
+
+            //         res.status(200).send({
+            //             msg: 'User created!',
+            //         });
+            //     } catch (err) {
+            //         res.status(500).send({
+            //             msg: 'The server encountered an unexpected condition!',
+            //         });
+            //     }
+            // } else {
+            //     res.status(401).send({
+            //         msg: 'User already exist',
+            //     });
+            // }
         };
     }
 

@@ -7,23 +7,24 @@ const opt = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.JWT_SECRET,
     issuer: config.JWT_ISS,
-    // audience: ''
 };
+
 const UsersController = require('../controllers/users-controller');
 const data = require('../data/index');
 
 const usersController = new UsersController(data);
 
 const init = (users) => {
-    return new JwtStrategy(opt, (_jwtPayload, done) => {
+    return new JwtStrategy(opt, async (_jwtPayload, done) => {
         console.log(_jwtPayload);
 
-        // const user = await usersController.getUserById();
+        const user = await usersController.getUserById(+_jwtPayload.id);
 
-        if (false) {
+        if (user) {
             return done(null, user);
         }
-        return done('Not authenticated', false);
+
+        return done('Not authenticated!', false);
     });
 };
 

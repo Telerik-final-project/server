@@ -15,9 +15,9 @@ const data = require('./data/index');
 const app = express();
 
 customExpress.init(app);
+app.use(cors());
 routers.init(app, data);
 
-app.use(cors());
 app.use(bodyParser.json());
 
 (async () => {
@@ -28,14 +28,9 @@ app.use(bodyParser.json());
     passport.use(await strategy.init(users));
 })();
 
-// app.use('/', authRoutes.create({ users }));
-// app.use('/', phoneRoutes.create({ phones }));
-
-
 app.get('/test', passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-        res.send({ authenticated: true });
-    });
+    (req, res) => res.send({ authenticated: true })
+);
 
 app.listen(config.PORT, () => {
     console.log(`App listening on port ${config.PORT}!`);
