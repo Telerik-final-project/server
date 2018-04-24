@@ -36,16 +36,16 @@ class UsersController {
     }
 
     async getUserById(id) {
-        let button;
+        let user;
 
         try {
-            button = await this.data.users.getById(+id);
+            user = await this.data.users.getById(+id);
         } catch (err) {
             console.log(err);
             throw err;
         }
 
-        return button;
+        return user;
     }
 
     async ifUserExists(email) {

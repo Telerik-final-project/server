@@ -1,13 +1,15 @@
-const JobsController = require('./jobs-controller');
 const ApplicationsController = require('./applications-controller');
-const ButtonsController = require('./buttons-controller');
 const ContactsController = require('./contacts-contoller');
+const ButtonsController = require('./buttons-controller');
 const UsersController = require('./users-controller');
+const JobsController = require('./jobs-controller');
+const AuthController = require('./auth-controller');
 
 module.exports = {
-    JobsController,
     ApplicationsController,
-    ButtonsController,
     ContactsController,
+    ButtonsController,
     UsersController,
+    JobsController,
+    AuthController,
 };

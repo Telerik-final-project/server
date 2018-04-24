@@ -8,9 +8,6 @@ const {
     UsersController,
 } = require('../controllers/index');
 
-const passport = require('passport');
-const validator = require('express-validator');
-
 const init = (app, data) => {
     const buttonsController = new ButtonsController(data);
     const contactsController = new ContactsController(data);
@@ -94,7 +91,7 @@ const init = (app, data) => {
         });
 
     console.log('ADMIN HERE', router);
-    app.use('/admin', router);
+    app.use('/api/admin', router);
 };
 
 module.exports = {

@@ -1,8 +1,15 @@
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const passport = require('passport');
 
-const config = require('./config');
-const customExpress = require('./config/express');
 const routers = require('./routes/index');
+const config = require('./config');
+
+const customExpress = require('./config/express');
+const strategy = require('./config/auth');
+
+const UsersController = require('./controllers/users-controller');
 const data = require('./data/index');
 const cors = require('cors');
 
@@ -11,11 +18,23 @@ const app = express();
 app.use(cors());
 
 customExpress.init(app);
+app.use(cors());
 routers.init(app, data);
 
-app.use((req, res, next) => {
-    res.locals.user = req.user || null;
-    next();
-});
+app.use(bodyParser.json());
 
-app.listen(config.port);
+(async () => {
+    const usersController = new UsersController(data);
+    const users = await usersController.getAllUsersData();
+
+    console.log(users);
+    passport.use(await strategy.init(users));
+})();
+
+app.get('/test', passport.authenticate('jwt', { session: false }),
+    (req, res) => res.send({ authenticated: true })
+);
+
+app.listen(config.PORT, () => {
+    console.log(`App listening on port ${config.PORT}!`);
+});

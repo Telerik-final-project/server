@@ -30,7 +30,7 @@ const init = (app, data) => {
         });
 
     console.log('USER HERE', router);
-    app.use('/user', router);
+    app.use('/api/user', router);
 };
 
 module.exports = {
