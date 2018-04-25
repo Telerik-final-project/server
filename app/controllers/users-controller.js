@@ -48,6 +48,19 @@ class UsersController {
         return user;
     }
 
+    async getUserByEmail(email) {
+        let user;
+
+        try {
+            user = await this.data.users.getUserByEmail(email);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return user;
+    }
+
     async ifUserExists(email) {
         let user;
 

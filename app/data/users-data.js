@@ -24,6 +24,22 @@ class UsersData extends Data {
         return false;
     }
 
+    async getUserByEmail(email) {
+        let user;
+
+        try {
+            user = await this.Model.findOne({
+                where: {
+                    email,
+                },
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
+        return user;
+    }
+
     async getUsersPerJobOffer(jobID) {
         const jobs = await Applications.findAll({
             where: {

@@ -17,7 +17,7 @@ const init = (app, data) => {
           cb(null, './uploads');
         },
         filename: (req, file, cb) => {
-          cb(null, file.fieldname + '-' + Date.now());
+          cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname);
         },
     });
     const upload = multer({ storage });
@@ -26,17 +26,14 @@ const init = (app, data) => {
     router
         .get('/', async (req, res) => {
             const jobs = await jobsController.getAllJobAds();
-            const context = { jobs };
 
-            res.send(context);
+            res.send(jobs);
         })
         .get('/:id', async (req, res) => {
             const id = +req.params.id;
             const job = await jobsController.getJobAdById(id);
 
-            const context = { job };
-
-            res.send(context);
+            res.send(job);
         })
         .get('/applications/:id', async (req, res) => { // applicants per id
             const jobID = +req.params.id;
@@ -48,13 +45,15 @@ const init = (app, data) => {
             res.send(context);
         })
         .post('/upload', upload.single('file'), (req, res) => {
-            console.log(req.file)
+            app.locals.file = req.file;
             res.json({'message': 'File uploaded successfully'});
         })
         .post('/create', async (req, res) => {
             const newJobOffer = req.body;
+            console.log(app.locals.file);
             try {
                 await jobsController.createJobAd(newJobOffer);
+                app.locals.file = null;
                 res.status(200);
             } catch (err) {
                 res.send({ errMsg: err.message });

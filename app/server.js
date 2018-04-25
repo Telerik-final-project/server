@@ -15,12 +15,11 @@ const data = require('./data/index');
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
 
 customExpress.init(app);
-app.use(cors());
 routers.init(app, data);
 
-app.use(bodyParser.json());
 
 (async () => {
     const usersController = new UsersController(data);
