@@ -19,13 +19,20 @@ class AuthController {
 
     login() {
         return async (req, res) => {
-            const id = req.body.id;
-            const user = await usersController.getUserById(id);
+            // const id = req.body.id;
+            // const user = await usersController.getUserById(id);
 
+            const id = +req.body.id;
+            const user = await usersController.getUserByEmail(req.body.email);
+            // console.log(user);
             try {
                 if (user) {
                     bcrypt.compare(req.body.password, user.password,
                         (err, response) => {
+                            if (err) {
+                                console.log(err);
+                                return res.status(500).send({ err: 'Invalid username' });
+                            }
                             if (response) {
                                 const expire = moment(new Date())
                                     .add(config.JWT_EXPIRE_TIME, 'seconds')
@@ -50,7 +57,7 @@ class AuthController {
                         });
                 } else {
                     return res.status(401).send({
-                        err: 'User already exist!',
+                        err: 'Invalid credentials.',
                     });
                 }
             } catch (err) {
