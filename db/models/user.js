@@ -2,6 +2,12 @@
 
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define('Users', {
+        id: {
+            primaryKey: true,
+            type: DataTypes.UUID,
+            unique: true,
+            allowNull: false,
+        },
         username: {
             type: DataTypes.STRING,
             unique: true,
@@ -13,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             validate: {
                 min: 8,
                 max: 256,

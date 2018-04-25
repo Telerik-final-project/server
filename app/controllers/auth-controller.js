@@ -19,7 +19,7 @@ class AuthController {
 
     login() {
         return async (req, res) => {
-            const id = +req.body.id;
+            const id = req.body.id;
             const user = await usersController.getUserById(id);
 
             try {
@@ -63,40 +63,44 @@ class AuthController {
 
     register() {
         return async (req, res) => {
-            const id = +req.body.id;
-            // const user = await usersController.getUserById(id);
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
-            res.send({message: 'Done it!'});
+            const username = req.body.username;
+            const user = await usersController.ifUserExists(username);
 
             // console.log(req.body);
-            // if (!user) {
-            //     const newUser = {
-            //         id: uuid(),
-            //         email: req.body.email,
-            //         password: '',
-            //     };
+            // res.send({ message: 'Done it!' });
 
-            //     try {
-            //         bcrypt.hash(req.body.password, null, null, (err, hash) => {
-            //             newUser.password = hash;
-            //         });
+            if (!user) {
+                const newUser = {
+                    id: uuid(),
+                    username: req.body.username,
+                    email: req.body.email,
+                };
 
-            //         usersController.createUser(newUser);
-
-            //         res.status(200).send({
-            //             msg: 'User created!',
-            //         });
-            //     } catch (err) {
-            //         res.status(500).send({
-            //             msg: 'The server encountered an unexpected condition!',
-            //         });
-            //     }
-            // } else {
-            //     res.status(401).send({
-            //         msg: 'User already exist',
-            //     });
-            // }
+                try {
+                    bcrypt.hash(req.body.password, null, null, (err, hash) => {
+                        if (err) {
+                            res.status(500).send({
+                                msg: 'The server encountered an unexpected condition!',
+                            });
+                        } else {
+                            console.log(hash);
+                            newUser.password = hash;
+                            usersController.createUser(newUser);
+                            res.status(200).send({
+                                msg: 'User created!',
+                            });
+                        }
+                    });
+                } catch (err) {
+                    res.status(500).send({
+                        msg: 'The server encountered an unexpected condition!',
+                    });
+                }
+            } else {
+                res.status(401).send({
+                    msg: 'User already exist',
+                });
+            }
         };
     }
 
