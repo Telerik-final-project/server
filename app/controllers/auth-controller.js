@@ -29,9 +29,8 @@ class AuthController {
                 if (user) {
                     bcrypt.compare(req.body.password, user.password,
                         (err, response) => {
-                            if (err) {
-                                console.log(err);
-                                return res.status(500).send({ err: 'Invalid username' });
+                            if (!response) {
+                                return res.status(402).send({ err: 'Invalid password' });
                             }
                             if (response) {
                                 const expire = moment(new Date())
