@@ -1,17 +1,21 @@
 const {
     Router,
 } = require('express');
+const path = require('path');
 
 const multer = require('multer');
 
 const {
     JobsController,
     UsersController,
+    ApplicationsController,
 } = require('../controllers/index');
 
 const init = (app, data) => {
     const jobsController = new JobsController(data);
     const usersController = new UsersController(data);
+    const applicationController = new ApplicationsController(data);
+
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
           cb(null, './uploads');
@@ -20,6 +24,7 @@ const init = (app, data) => {
           cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname);
         },
     });
+
     const upload = multer({ storage });
 
     const router = new Router();
@@ -44,9 +49,29 @@ const init = (app, data) => {
 
             res.send(context);
         })
-        .post('/upload', upload.single('file'), (req, res) => {
-            app.locals.file = req.file;
-            res.json({'message': 'File uploaded successfully'});
+        .post('/upload-cv', upload.single('file'), (req, res) => {
+            console.log(req.file);
+            app.locals.fileCv = req.file;
+            res.json({
+                'message': 'File uploaded successfully',
+                fileUrl: path.join(__dirname, '..', '..', 'uploads', req.file.filename),
+                type: 'cv' }
+            );
+        })
+        .post('/upload-cover', upload.single('file'), (req, res) => {
+            app.locals.fileCover = req.file;
+            res.json({
+                'message': 'File uploaded successfully',
+                fileUrl: path.join(__dirname, '..', '..', 'uploads', req.file.filename),
+                type: 'cover' }
+            );
+        })
+        .post('/applications/create', async (req, res) => {
+            console.log('-'.repeat(10))
+            console.log(req.body);
+
+            return res.json({msg: 'OKI'})
+            // const application = await applicationController.createApplication(req.body);
         })
         .post('/create', async (req, res) => {
             const newJobOffer = req.body;
