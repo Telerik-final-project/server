@@ -24,7 +24,6 @@ routers.init(app, data);
     const usersController = new UsersController(data);
     const users = await usersController.getAllUsersData();
 
-    console.log(users);
     passport.use(await strategy.auth(users));
 })();
 

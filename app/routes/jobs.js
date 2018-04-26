@@ -89,7 +89,6 @@ const init = (app, data) => {
             }
         });
 
-    console.log('JOBS HERE', router);
     app.use('/api/jobs', router);
 };
 

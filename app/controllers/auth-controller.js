@@ -41,7 +41,6 @@ class AuthController {
                                 const payload = {
                                     sub: user.id,
                                     email: user.email,
-                                    password: user.password,
                                     exp: expire,
                                     iss: config.JWT_ISS,
                                 };

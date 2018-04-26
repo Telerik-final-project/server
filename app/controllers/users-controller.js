@@ -80,7 +80,6 @@ class UsersController {
     async createUser(data) {
         try {
             data.isDeleted = 0;
-            console.log(data);
             await this.data.users.create(data);
         } catch (err) {
             console.log(err);
