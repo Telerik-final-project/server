@@ -14,11 +14,11 @@ const data = require('../data/index');
 
 const usersController = new UsersController(data);
 
-const init = (users) => {
+const auth = (users) => {
     return new JwtStrategy(opt, async (_jwtPayload, done) => {
         console.log(_jwtPayload);
 
-        const user = await usersController.getUserById(+_jwtPayload.id);
+        const user = await usersController.getUserById(_jwtPayload.id);
 
         if (user) {
             return done(null, user);
@@ -29,5 +29,5 @@ const init = (users) => {
 };
 
 module.exports = {
-    init,
+    auth,
 };

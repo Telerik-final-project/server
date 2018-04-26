@@ -39,7 +39,7 @@ class UsersController {
         let user;
 
         try {
-            user = await this.data.users.getById(+id);
+            user = await this.data.users.getById(id);
         } catch (err) {
             console.log(err);
             throw err;
@@ -61,11 +61,11 @@ class UsersController {
         return user;
     }
 
-    async ifUserExists(email) {
+    async ifUserExists(username) {
         let user;
 
         try {
-            user = await this.data.users.checkUserExistence(email);
+            user = await this.data.users.checkUserExistence(username);
             if (user[0]) {
                 return true;
             }
@@ -79,6 +79,8 @@ class UsersController {
 
     async createUser(data) {
         try {
+            data.isDeleted = 0;
+            console.log(data);
             await this.data.users.create(data);
         } catch (err) {
             console.log(err);

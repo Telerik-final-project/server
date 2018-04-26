@@ -13,7 +13,6 @@ const UsersController = require('./controllers/users-controller');
 const data = require('./data/index');
 
 const app = express();
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -26,7 +25,7 @@ routers.init(app, data);
     const users = await usersController.getAllUsersData();
 
     console.log(users);
-    passport.use(await strategy.init(users));
+    passport.use(await strategy.auth(users));
 })();
 
 app.get('/test', passport.authenticate('jwt', { session: false }),

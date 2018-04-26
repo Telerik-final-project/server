@@ -10,18 +10,14 @@ class UsersData extends Data {
         super(Users);
     }
 
-    async checkUserExistence(email) {
+    async checkUserExistence(username) {
         const result = await this.Model.findOne({
             where: {
-                email: email,
+                username: username,
             },
         });
-
-        if (result.length > 0) {
-            return true;
-        }
-
-        return false;
+        
+        return !!result;
     }
 
     async getUserByEmail(email) {
