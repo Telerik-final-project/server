@@ -110,11 +110,10 @@ const init = (app, data) => {
                 res.send({ errMsg: err.message });
             }
         })
-        .delete('/delete', async (req, res) => {
-            const id = 1; // will be changed
+        .post('/delete/:id', async (req, res) => {
             try {
-                await jobsController.deleteJobAd();
-                res.status(200);
+                await jobsController.deleteJobAd(req.body.id);
+                res.send({ status: 'ok' }).status(200);
             } catch (err) {
                 res.send({ errMsg: err.message });
             }

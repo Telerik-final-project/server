@@ -31,12 +31,12 @@ class Data {
             this.Model.update({
                 [key]: value,
             }, {
-                    where: {
-                        id: id,
-                    },
-                }, ).success(() => { }).error(() => {
-                    console.log('Invalid tokens!');
-                });
+                where: {
+                    id: id,
+                },
+            }, ).success(() => {}).error(() => {
+                console.log('Invalid tokens!');
+            });
         };
 
         data.forEach((dataRowToUpdate) => {
@@ -50,10 +50,10 @@ class Data {
         return this.Model.update({
             isDeleted: 1,
         }, {
-                where: {
-                    id: 1,
-                },
-            });
+            where: {
+                id,
+            },
+        });
     }
 }
 
