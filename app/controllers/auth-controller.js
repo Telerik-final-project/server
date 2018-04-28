@@ -36,11 +36,11 @@ class AuthController {
                                 const expire = moment(new Date())
                                     .add(config.JWT_EXPIRE_TIME, 'seconds')
                                     .unix();
-
                                 const payload = {
                                     sub: user.id,
                                     email: user.email,
                                     exp: expire,
+                                    role: user.Role.name,
                                     iss: config.JWT_ISS,
                                 };
 
@@ -79,6 +79,7 @@ class AuthController {
                     id: uuid(),
                     username: req.body.username,
                     email: req.body.email,
+                    role_id: 2,
                 };
 
                 try {

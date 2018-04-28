@@ -3,11 +3,12 @@ const Data = require('./data-generic.js');
 const {
     Users,
     Applications,
+    Roles,
 } = require('../../db/models');
 
 class UsersData extends Data {
     constructor() {
-        super(Users);
+        super(Users, [Roles]);
     }
 
     async checkUserExistence(username) {
@@ -28,6 +29,7 @@ class UsersData extends Data {
                 where: {
                     email,
                 },
+                include: [Roles],
             });
         } catch (err) {
             console.log(err);
@@ -41,6 +43,7 @@ class UsersData extends Data {
             where: {
                 job_offer_id: jobID,
             },
+            include: [Roles],
         });
 
         const applicantsIDs = jobs.map((job) => job.dataValues.user_id);
