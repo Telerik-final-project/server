@@ -16,7 +16,7 @@ class UsersData extends Data {
                 username: username,
             },
         });
-        
+
         return !!result;
     }
 

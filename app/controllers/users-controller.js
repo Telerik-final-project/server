@@ -70,7 +70,6 @@ class UsersController {
                 return true;
             }
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -82,11 +81,8 @@ class UsersController {
             data.isDeleted = 0;
             await this.data.users.create(data);
         } catch (err) {
-            console.log(err);
             throw err;
         }
-
-        return true;
     }
 }
 
