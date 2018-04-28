@@ -6,6 +6,7 @@ const {
     Buttons,
     Contacts,
     JobOffers,
+    JobTypes,
 } = require('../../db/models');
 
 const ApplicationsData = require('./applications-data');
@@ -16,6 +17,7 @@ module.exports = {
     roles: new Data(Roles),
     buttons: new Data(Buttons),
     contacts: new Data(Contacts),
-    jobOffers: new Data(JobOffers),
+    jobOffers: new Data(JobOffers, [JobTypes]),
     applications: new ApplicationsData(),
+    jobTypes: new Data(JobTypes),
 };

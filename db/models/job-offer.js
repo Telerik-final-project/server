@@ -14,14 +14,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        category: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                min: 2,
-                max: 20,
-            },
-        },
         status: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -36,11 +28,20 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     }, {
-            charset: 'utf8',
-            collate: 'utf8_unicode_ci',
-        });
+        charset: 'utf8',
+        collate: 'utf8_unicode_ci',
+    });
 
-    JobOffers.associate = (models) => { };
+    JobOffers.associate = (models) => {
+        const {
+            JobTypes,
+        } = models;
+
+        JobOffers.belongsTo(JobTypes, {
+            foreignKey: 'type_id',
+            onDelete: 'CASCADE',
+        });
+    };
 
     return JobOffers;
 };

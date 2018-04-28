@@ -9,6 +9,7 @@ class Data {
             where: {
                 isDeleted: 0,
             },
+            include: this.includes,
         });
     }
 

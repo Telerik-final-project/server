@@ -9,12 +9,14 @@ const {
     JobsController,
     UsersController,
     ApplicationsController,
+    JobTypesController,
 } = require('../controllers/index');
 
 const init = (app, data) => {
     const jobsController = new JobsController(data);
     const usersController = new UsersController(data);
     const applicationController = new ApplicationsController(data);
+    const jobTypesController = new JobTypesController(data);
 
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
@@ -31,6 +33,11 @@ const init = (app, data) => {
     router
         .get('/', async (req, res) => {
             const jobs = await jobsController.getAllJobAds();
+
+            res.send(jobs);
+        })
+        .get('/types', async (req, res) => {
+            const jobs = await jobTypesController.getAllJobTypes();
 
             res.send(jobs);
         })
@@ -70,7 +77,6 @@ const init = (app, data) => {
             console.log('-'.repeat(10))
             console.log(req.body);
 
-            return res.json({msg: 'OKI'})
             // const application = await applicationController.createApplication(req.body);
         })
         .post('/create', async (req, res) => {
