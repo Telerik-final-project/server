@@ -13,7 +13,6 @@ const init = (app) => {
         .post('/register', authController.register())
         .post('/login', authController.login());
 
-    console.log('AUTH HERE', app);
     app.use('/api', router);
 };
 

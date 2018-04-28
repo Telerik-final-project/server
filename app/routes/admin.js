@@ -90,7 +90,6 @@ const init = (app, data) => {
             res.status(200);
         });
 
-    console.log('ADMIN HERE', router);
     app.use('/api/admin', router);
 };
 

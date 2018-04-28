@@ -82,18 +82,27 @@ class AuthController {
                 };
 
                 try {
-                    bcrypt.hash(req.body.password, null, null, (err, hash) => {
+                    bcrypt.hash(req.body.password, null, null, async (err, hash) => {
                         if (err) {
                             res.status(500).send({
-                                msg: 'The server encountered an unexpected condition!',
+                                msg:
+                                    'The server encountered an unexpected condition!',
                             });
                         } else {
                             console.log(hash);
                             newUser.password = hash;
-                            usersController.createUser(newUser);
-                            res.status(200).send({
-                                msg: 'User created!',
-                            });
+                            try {
+                                const userRes = await usersController.createUser(newUser);
+                                console.log(await userRes);
+                                userRes.status(200).send({
+                                    msg: 'User created!',
+                                });
+                            } catch (error) {
+                                res.status(500).send({
+                                    msd: "SHTE SE GRUMNA WEEEEEEEEEE",
+                                });
+                                // console.log(error);
+                            }
                         }
                     });
                 } catch (err) {
