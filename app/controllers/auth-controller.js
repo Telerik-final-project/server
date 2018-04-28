@@ -94,13 +94,13 @@ class AuthController {
                             newUser.password = hash;
                             try {
                                 const userRes = await usersController.createUser(newUser);
-                                console.log(await userRes);
+                                console.log(userRes);
                                 userRes.status(200).send({
                                     msg: 'User created!',
                                 });
                             } catch (error) {
                                 res.status(500).send({
-                                    msd: "SHTE SE GRUMNA WEEEEEEEEEE",
+                                    msd: error.message,
                                 });
                                 // console.log(error);
                             }
