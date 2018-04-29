@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 class JobsController {
     constructor(data) {
         this.data = data;
@@ -49,14 +51,23 @@ class JobsController {
     }
 
     async createJobAd(data) {
+        let newJob;
+        const description = data.descriptionUrl;
+        const relPath = path.join(__dirname, '..', '..',
+            'uploads', 'descriptions', new Date().getTime() + '.txt');
+
         try {
-            await this.data.jobOffers.create(data);
+            fs.writeFile(relPath, description, 'utf8', (err) => {
+                if (err) throw err;
+            });
+            data.descriptionUrl = relPath;
+            newJob = await this.data.jobOffers.create(data);
         } catch (err) {
             console.log(err);
             throw err;
         }
 
-        return true;
+        return newJob;
     }
 
     async deleteJobAd(id) {

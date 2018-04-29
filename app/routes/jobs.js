@@ -81,11 +81,13 @@ const init = (app, data) => {
         })
         .post('/create', async (req, res) => {
             const newJobOffer = req.body;
+            let newJob;
             console.log(app.locals.file);
+            console.log(newJobOffer);
             try {
-                await jobsController.createJobAd(newJobOffer);
+                newJob = await jobsController.createJobAd(newJobOffer);
                 app.locals.file = null;
-                res.status(200);
+                res.send(newJob).status(200);
             } catch (err) {
                 res.send({ errMsg: err.message });
             }

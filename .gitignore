@@ -61,7 +61,6 @@ typings/
 db/migrations
 
 # uploads
-uploads
 
 # db index
 db/models/index.js
