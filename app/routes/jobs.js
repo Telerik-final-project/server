@@ -110,11 +110,10 @@ const init = (app, data) => {
         })
         .post('/edit', async (req, res) => {
             try {
-                const jobOfferParams = req.body;
-                const info = [...jobOfferParams];
-                await jobsController.updateJobAd(info);
+                const jobOffer = req.body;
+                await jobsController.updateJobAd(jobOffer);
 
-                res.status(200);
+                res.send({ status: 'ok' }).status(200);
             } catch (err) {
                 res.send({ errMsg: err.message });
             }

@@ -34,16 +34,16 @@ class Data {
                 where: {
                     id: id,
                 },
-            }, ).success(() => {}).error(() => {
-                console.log('Invalid tokens!');
             });
         };
-
-        data.forEach((dataRowToUpdate) => {
-            const attr = Object.keys(dataRowToUpdate)[0];
-            const value = dataRowToUpdate[attr];
-            tableUpdate(attr, value);
+        Object.keys(data).forEach((key) => {
+            tableUpdate(key, data[key]);
         });
+        // data.forEach((dataRowToUpdate) => {
+        //     const attr = Object.keys(dataRowToUpdate)[0];
+        //     const value = dataRowToUpdate[attr];
+        //     tableUpdate(attr, value);
+        // });
     }
 
     delete(id) {
