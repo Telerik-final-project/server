@@ -1,3 +1,4 @@
+/* globals __dirname */
 const fs = require('fs');
 const path = require('path');
 class JobsController {
@@ -19,24 +20,34 @@ class JobsController {
     }
 
     async getJobAdById(id) {
-        let ad;
+        return new Promise(async (resolve, reject) => {
+            let ad;
 
-        try {
-            ad = await this.data.jobOffers.getById(id);
-        } catch (err) {
-            console.log(err);
-            throw err;
-        }
+            try {
+                ad = await this.data.jobOffers.getById(id);
+            } catch (err) {
+                console.log(err);
+                throw err;
+            }
 
-        return ad;
+            fs.readFile(ad.descriptionUrl, 'utf8', (err, data) => {
+                if (err) {
+                    return reject();
+                }
+
+                ad.descriptionUrl = data;
+
+                return resolve(ad);
+            });
+        });
     }
 
     /**
-      * @description Get a row from table by given id.
-      * @param id number
-      * @param data array form objects with arttribute
-      * and value to update
-      * @return Returns db object with id = id parameter.
+     * @description Get a row from table by given id.
+     * @param id number
+     * @param data array form objects with arttribute
+     * and value to update
+     * @return Returns db object with id = id parameter.
      */
 
     async updateJobAd(id, data) {

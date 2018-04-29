@@ -1,3 +1,4 @@
+/* globals __dirname*/
 const {
     Router,
 } = require('express');
@@ -43,9 +44,12 @@ const init = (app, data) => {
         })
         .get('/:id', async (req, res) => {
             const id = +req.params.id;
-            const job = await jobsController.getJobAdById(id);
-
-            res.send(job);
+            try {
+                const job = await jobsController.getJobAdById(id);
+                res.send(job);
+            } catch (err) {
+                res.status(500).send({ errMsg: 'Internal server error' });
+            }
         })
         .get('/applications/:id', async (req, res) => { // applicants per id
             const jobID = +req.params.id;
@@ -61,7 +65,8 @@ const init = (app, data) => {
             app.locals.fileCv = req.file;
             res.json({
                 'message': 'File uploaded successfully',
-                fileUrl: path.join(__dirname, '..', '..', 'uploads', req.file.filename),
+                fileUrl: path.join(__dirname, '..',
+                    '..', 'uploads', req.file.filename),
                 type: 'cv' }
             );
         })
@@ -69,15 +74,17 @@ const init = (app, data) => {
             app.locals.fileCover = req.file;
             res.json({
                 'message': 'File uploaded successfully',
-                fileUrl: path.join(__dirname, '..', '..', 'uploads', req.file.filename),
+                fileUrl: path.join(__dirname, '..', '..',
+                    'uploads', req.file.filename),
                 type: 'cover' }
             );
         })
         .post('/applications/create', async (req, res) => {
-            console.log('-'.repeat(10))
+            console.log('-'.repeat(10));
             console.log(req.body);
 
-            // const application = await applicationController.createApplication(req.body);
+            // const application =
+                // await applicationController.createApplication(req.body);
         })
         .post('/create', async (req, res) => {
             const newJobOffer = req.body;
