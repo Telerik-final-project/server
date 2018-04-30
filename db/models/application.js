@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         coverLetterUrl: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         isDeleted: {
             type: DataTypes.INTEGER,

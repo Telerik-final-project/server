@@ -61,30 +61,34 @@ const init = (app, data) => {
             res.send(context);
         })
         .post('/upload-cv', upload.single('file'), (req, res) => {
-            console.log(req.file);
+            const fileUrl = path.join(__dirname, '..',
+            '..', 'uploads', req.file.filename);
             app.locals.fileCv = req.file;
+            app.locals.fileCv.fileUrl = fileUrl;
             res.json({
                 'message': 'File uploaded successfully',
-                fileUrl: path.join(__dirname, '..',
-                    '..', 'uploads', req.file.filename),
+                fileUrl,
                 type: 'cv' }
             );
         })
         .post('/upload-cover', upload.single('file'), (req, res) => {
+            const fileUrl = path.join(__dirname, '..', '..',
+            'uploads', req.file.filename);
             app.locals.fileCover = req.file;
+            app.locals.fileCover.fileUrl = fileUrl;
             res.json({
                 'message': 'File uploaded successfully',
-                fileUrl: path.join(__dirname, '..', '..',
-                    'uploads', req.file.filename),
+                fileUrl,
                 type: 'cover' }
-            );
+            ).status(200);
         })
         .post('/applications/create', async (req, res) => {
-            console.log('-'.repeat(10));
-            console.log(req.body);
-
-            // const application =
-                // await applicationController.createApplication(req.body);
+            try {
+                await applicationController.createApplication(req.body);
+                res.send({ status: 'ok' }).status(200);
+            } catch (err) {
+                res.send({ errMsg: err.message }).status(500);
+            }
         })
         .post('/create', async (req, res) => {
             const newJobOffer = req.body;
@@ -93,7 +97,7 @@ const init = (app, data) => {
             console.log(newJobOffer);
             try {
                 newJob = await jobsController.createJobAd(newJobOffer);
-                app.locals.file = null;
+                // app.locals.file = null;
                 res.send(newJob).status(200);
             } catch (err) {
                 res.send({ errMsg: err.message });
