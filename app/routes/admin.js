@@ -33,7 +33,7 @@ const init = (app, data) => {
 
             res.status(200);
         })
-        .get('/contacts/edit', async (req, res) => {
+        .get('/contacts/edit/', async (req, res) => {
             const id = 1; // will be changed
             const contactInfoToDisplay =
                 await contactsController.getContactInfoById(id);
@@ -42,14 +42,14 @@ const init = (app, data) => {
 
             res.send(context);
         })
-        .post('/contacts/edit', async (req, res) => {
+        .post('/contacts/edit/:id', async (req, res) => {
             const contactInfo = req.body;
             const info = [...contactInfo];
             await contactsController.updateContacts(info);
 
             res.status(200);
         })
-        .delete('/contacts/delete', async (req, res) => {
+        .post('/contacts/delete/:id', async (req, res) => {
             const id = 1; // will be changed
             await contactsController.deleteContacts(id);
 
@@ -85,14 +85,24 @@ const init = (app, data) => {
 
             res.send(context);
         })
-        .post('/buttons/edit', async (req, res) => {
+        .post('/buttons/edit/:id', async (req, res) => {
+            const id = +req.params.id;
             const buttonInfo = req.body;
+            console.log(buttonInfo)
             const info = [...buttonInfo];
-            await buttonsController.updateButton(info);
 
-            res.status(200);
+            try {
+                await buttonsController.updateButton(id, info);
+
+                res.status(200);
+            } catch (err) {
+                res.status(500).send({
+                    errMsg: 'server error!',
+                });
+                console.log(err);
+            }
         })
-        .delete('/buttons/delete', async (req, res) => {
+        .post('/buttons/delete/:id', async (req, res) => {
             const id = 1; // will be changed
             await buttonsController.deleteButton(id);
 
