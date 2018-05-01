@@ -42,12 +42,12 @@ const init = (app, data) => {
 
             res.send(jobs);
         })
-        .get('/download/:url', async (req, res) => {
-            const url = req.params.url;
+        .get('/download/:fileName', async (req, res) => {
+            const file = req.params.fileName;
 
-            const filePath = path.join(__dirname, '..', '..', 'uploads', url);
+            const filePath = path.join(__dirname, '..', '..', 'uploads', file);
 
-            return res.download(filePath, url);
+            return res.download(filePath, file);
         })
         .get('/:id/applications', async (req, res) => { // applicants per id
             const jobId = +req.params.id;
