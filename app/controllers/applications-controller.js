@@ -16,6 +16,20 @@ class ApplicationsController {
         return applications;
     }
 
+    async getAllApplicationsByJobId(jobId) {
+        let applications;
+
+        try {
+            applications = await this.data.
+                applications.getApplicationsByJobId(jobId);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return applications;
+    }
+
     async createApplication(data) {
         const applicationData = {
             comment: data.comment,

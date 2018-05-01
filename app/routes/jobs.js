@@ -42,6 +42,21 @@ const init = (app, data) => {
 
             res.send(jobs);
         })
+        .get('/download/:url', async (req, res) => {
+            const url = req.params.url;
+
+            const filePath = path.join(__dirname, '..', '..', 'uploads', url);
+
+            return res.download(filePath, url);
+        })
+        .get('/:id/applications', async (req, res) => { // applicants per id
+            const jobId = +req.params.id;
+            console.log(jobId);
+            const applicants =
+                await applicationController.getAllApplicationsByJobId(jobId);
+
+            res.send(applicants);
+        })
         .get('/:id', async (req, res) => {
             const id = +req.params.id;
             try {
@@ -50,15 +65,6 @@ const init = (app, data) => {
             } catch (err) {
                 res.status(500).send({ errMsg: 'Internal server error' });
             }
-        })
-        .get('/applications/:id', async (req, res) => { // applicants per id
-            const jobID = +req.params.id;
-            const applicants =
-                await usersController.getUsersPerJobOffer(jobID);
-
-            const context = { applicants };
-
-            res.send(context);
         })
         .post('/upload-cv', upload.single('file'), (req, res) => {
             const fileUrl = path.join(__dirname, '..',
@@ -85,9 +91,9 @@ const init = (app, data) => {
         .post('/applications/create', async (req, res) => {
             try {
                 await applicationController.createApplication(req.body);
-                res.send({ status: 'ok' }).status(200);
+                res.status(200).send({ status: 'ok' });
             } catch (err) {
-                res.send({ errMsg: err.message }).status(500);
+                res.status(500).send({ errMsg: err.message });
             }
         })
         .post('/create', async (req, res) => {
