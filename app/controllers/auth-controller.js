@@ -95,7 +95,7 @@ class AuthController {
                             try {
                                 const userRes = await usersController.createUser(newUser);
                                 console.log(userRes);
-                                userRes.status(200).send({
+                                res.status(200).send({
                                     msg: 'User created!',
                                 });
                             } catch (error) {

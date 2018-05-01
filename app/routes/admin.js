@@ -63,12 +63,21 @@ const init = (app, data) => {
         })
         .post('/buttons/create', async (req, res) => {
             const newButton = req.body;
-            buttonsController.createButton(newButton);
+            console.log(newButton);
+            try {
+                buttonsController.createButton(newButton);
 
-            res.status(200);
+                res.status(200).send({
+                    msg: 'Button created!',
+                });
+            } catch (err) {
+                res.status(500).send({
+                    msd: err.message,
+                });
+            }
         })
-        .get('/buttons/edit', async (req, res) => {
-            const id = 1; // will be changed
+        .get('/buttons/edit/:id', async (req, res) => {
+            const id = req.params.id;
             const buttonInfoToDisplay =
                 await buttonsController.getButtonById(id);
 
