@@ -104,9 +104,9 @@ const init = (app, data) => {
             try {
                 newJob = await jobsController.createJobAd(newJobOffer);
                 // app.locals.file = null;
-                res.send(newJob).status(200);
+                res.status(200).send(newJob);
             } catch (err) {
-                res.send({ errMsg: err.message });
+                res.status(500).send({ errMsg: err.message });
             }
         })
         .get('/edit', async (req, res) => {
@@ -123,17 +123,17 @@ const init = (app, data) => {
                 const jobOffer = req.body;
                 await jobsController.updateJobAd(jobOffer);
 
-                res.send({ status: 'ok' }).status(200);
+                res.status(200).send({ status: 'ok' });
             } catch (err) {
-                res.send({ errMsg: err.message });
+                res.status(500).send({ errMsg: err.message });
             }
         })
         .post('/delete/:id', async (req, res) => {
             try {
                 await jobsController.deleteJobAd(req.body.id);
-                res.send({ status: 'ok' }).status(200);
+                res.status(200).send({ status: 'ok' });
             } catch (err) {
-                res.send({ errMsg: err.message });
+                res.status(500).send({ errMsg: err.message });
             }
         });
 
