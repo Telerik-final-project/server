@@ -42,12 +42,12 @@ const init = (app, data) => {
 
             res.send(jobs);
         })
-        .get('/download/:url', async (req, res) => {
-            const url = req.params.url;
+        .get('/download/:fileName', async (req, res) => {
+            const file = req.params.fileName;
 
-            const filePath = path.join(__dirname, '..', '..', 'uploads', url);
+            const filePath = path.join(__dirname, '..', '..', 'uploads', file);
 
-            return res.download(filePath, url);
+            return res.download(filePath, file);
         })
         .get('/:id/applications', async (req, res) => { // applicants per id
             const jobId = +req.params.id;
@@ -104,9 +104,9 @@ const init = (app, data) => {
             try {
                 newJob = await jobsController.createJobAd(newJobOffer);
                 // app.locals.file = null;
-                res.send(newJob).status(200);
+                res.status(200).send(newJob);
             } catch (err) {
-                res.send({ errMsg: err.message });
+                res.status(500).send({ errMsg: err.message });
             }
         })
         .get('/edit', async (req, res) => {
@@ -123,17 +123,17 @@ const init = (app, data) => {
                 const jobOffer = req.body;
                 await jobsController.updateJobAd(jobOffer);
 
-                res.send({ status: 'ok' }).status(200);
+                res.status(200).send({ status: 'ok' });
             } catch (err) {
-                res.send({ errMsg: err.message });
+                res.status(500).send({ errMsg: err.message });
             }
         })
         .post('/delete/:id', async (req, res) => {
             try {
                 await jobsController.deleteJobAd(req.body.id);
-                res.send({ status: 'ok' }).status(200);
+                res.status(200).send({ status: 'ok' });
             } catch (err) {
-                res.send({ errMsg: err.message });
+                res.status(500).send({ errMsg: err.message });
             }
         });
 
