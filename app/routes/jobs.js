@@ -42,6 +42,21 @@ const init = (app, data) => {
 
             res.send(jobs);
         })
+        .get('/download/:url', async (req, res) => {
+            const url = req.params.url;
+
+            const filePath = path.join(__dirname, '..', '..', 'uploads', url);
+
+            return res.download(filePath, url);
+        })
+        .get('/:id/applications', async (req, res) => { // applicants per id
+            const jobId = +req.params.id;
+            console.log(jobId);
+            const applicants =
+                await applicationController.getAllApplicationsByJobId(jobId);
+
+            res.send(applicants);
+        })
         .get('/:id', async (req, res) => {
             const id = +req.params.id;
             try {
@@ -51,40 +66,35 @@ const init = (app, data) => {
                 res.status(500).send({ errMsg: 'Internal server error' });
             }
         })
-        .get('/applications/:id', async (req, res) => { // applicants per id
-            const jobID = +req.params.id;
-            const applicants =
-                await usersController.getUsersPerJobOffer(jobID);
-
-            const context = { applicants };
-
-            res.send(context);
-        })
         .post('/upload-cv', upload.single('file'), (req, res) => {
-            console.log(req.file);
+            const fileUrl = path.join(__dirname, '..',
+            '..', 'uploads', req.file.filename);
             app.locals.fileCv = req.file;
+            app.locals.fileCv.fileUrl = fileUrl;
             res.json({
                 'message': 'File uploaded successfully',
-                fileUrl: path.join(__dirname, '..',
-                    '..', 'uploads', req.file.filename),
+                fileUrl,
                 type: 'cv' }
             );
         })
         .post('/upload-cover', upload.single('file'), (req, res) => {
+            const fileUrl = path.join(__dirname, '..', '..',
+            'uploads', req.file.filename);
             app.locals.fileCover = req.file;
+            app.locals.fileCover.fileUrl = fileUrl;
             res.json({
                 'message': 'File uploaded successfully',
-                fileUrl: path.join(__dirname, '..', '..',
-                    'uploads', req.file.filename),
+                fileUrl,
                 type: 'cover' }
-            );
+            ).status(200);
         })
         .post('/applications/create', async (req, res) => {
-            console.log('-'.repeat(10));
-            console.log(req.body);
-
-            // const application =
-                // await applicationController.createApplication(req.body);
+            try {
+                await applicationController.createApplication(req.body);
+                res.status(200).send({ status: 'ok' });
+            } catch (err) {
+                res.status(500).send({ errMsg: err.message });
+            }
         })
         .post('/create', async (req, res) => {
             const newJobOffer = req.body;
@@ -93,7 +103,7 @@ const init = (app, data) => {
             console.log(newJobOffer);
             try {
                 newJob = await jobsController.createJobAd(newJobOffer);
-                app.locals.file = null;
+                // app.locals.file = null;
                 res.send(newJob).status(200);
             } catch (err) {
                 res.send({ errMsg: err.message });
@@ -110,11 +120,10 @@ const init = (app, data) => {
         })
         .post('/edit', async (req, res) => {
             try {
-                const jobOfferParams = req.body;
-                const info = [...jobOfferParams];
-                await jobsController.updateJobAd(info);
+                const jobOffer = req.body;
+                await jobsController.updateJobAd(jobOffer);
 
-                res.status(200);
+                res.send({ status: 'ok' }).status(200);
             } catch (err) {
                 res.send({ errMsg: err.message });
             }

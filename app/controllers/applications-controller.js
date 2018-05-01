@@ -16,9 +16,36 @@ class ApplicationsController {
         return applications;
     }
 
-    async createApplication(data) {
+    async getAllApplicationsByJobId(jobId) {
+        let applications;
+
         try {
-            await this.data.applications.create(data);
+            applications = await this.data.
+                applications.getApplicationsByJobId(jobId);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        return applications;
+    }
+
+    async createApplication(data) {
+        const applicationData = {
+            comment: data.comment,
+            job_offer_id: data.jobOfferId,
+            user_id: data.userId,
+            cvUrl: data.cvUrl,
+            coverLetterUrl: data.coverLetterUrl,
+        };
+
+        const userUpdateData = {
+            firstName: data.firstName,
+            lastName: data.lastName,
+        };
+        try {
+            await this.data.applications.create(applicationData);
+            await this.data.users.update(data.userId, userUpdateData);
         } catch (err) {
             console.log(err);
             throw err;

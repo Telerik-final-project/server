@@ -2,6 +2,7 @@ const Data = require('./data-generic.js');
 
 const {
     Applications,
+    Users,
 } = require('../../db/models');
 
 class ApplicationsData extends Data {
@@ -14,6 +15,16 @@ class ApplicationsData extends Data {
             where: {
                 user_id: userId,
             },
+        });
+    }
+
+    getApplicationsByJobId(jobId) {
+        return this.Model.findAll({
+            where: {
+                job_offer_id: jobId,
+                isDeleted: 0,
+            },
+            include: [Users],
         });
     }
 }

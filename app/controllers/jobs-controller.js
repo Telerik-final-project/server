@@ -35,7 +35,7 @@ class JobsController {
                     return reject();
                 }
 
-                ad.descriptionUrl = data;
+                ad.dataValues.description = data;
 
                 return resolve(ad);
             });
@@ -50,9 +50,19 @@ class JobsController {
      * @return Returns db object with id = id parameter.
      */
 
-    async updateJobAd(id, data) {
+    async updateJobAd(data) {
+        console.log(data);
         try {
-            await this.data.jobOffers.update(id, data);
+            await this.data.jobOffers.update(data.id, data);
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+        try {
+            fs.writeFile(data.descriptionUrl, data.description, 'utf8', (err) => {
+                if (err) throw err;
+            });
         } catch (err) {
             console.log(err);
             throw err;
@@ -63,7 +73,7 @@ class JobsController {
 
     async createJobAd(data) {
         let newJob;
-        const description = data.descriptionUrl;
+        const description = data.description;
         const relPath = path.join(__dirname, '..', '..',
             'uploads', 'descriptions', new Date().getTime() + '.txt');
 
