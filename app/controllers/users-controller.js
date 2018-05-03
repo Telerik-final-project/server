@@ -12,7 +12,7 @@ class UsersController {
             console.log(err);
         }
 
-        const apps = await Promise.all(users.map(async (user) => {
+        const app = await Promise.all(users.map(async (user) => {
             let applications;
             try {
                 applications = await this.data.
@@ -25,14 +25,14 @@ class UsersController {
             return applications;
         }));
 
-        console.log(apps);
+        console.log(app);
 
-        return users.map((user) => {
+        return users.map((user, indx) => {
             return {
                 id: user.id,
                 email: user.email,
                 createdAt: user.createdAt,
-                applications: user.applications || 0,
+                applications: app[indx],
             };
         });
     }
