@@ -43,11 +43,6 @@ class Data {
     Object.keys(data).forEach((key) => {
       tableUpdate(key, data[key]);
     });
-    // data.forEach((dataRowToUpdate) => {
-    //     const attr = Object.keys(dataRowToUpdate)[0];
-    //     const value = dataRowToUpdate[attr];
-    //     tableUpdate(attr, value);
-    // });
   }
 
   delete(id) {

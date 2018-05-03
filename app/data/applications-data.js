@@ -10,12 +10,14 @@ class ApplicationsData extends Data {
         super(Applications);
     }
 
-    getApplicationsByUserId(userId) {
-        return this.Model.findAll({
+    async getApplicationsByUserId(userId) {
+        const apps = await this.Model.findAll({
             where: {
                 user_id: userId,
             },
         });
+
+        return apps.length;
     }
 
     getApplicationsByJobId(jobId) {
