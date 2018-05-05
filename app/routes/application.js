@@ -23,14 +23,20 @@ const init = (app, data) => {
   const router = new Router();
   router
     .get('/', async (req, res) => {
-      const apps = await applicationController.getAll();
-
-      res.send(apps);
+      try {
+        const apps = await applicationController.getAll();
+        res.status(200).send(apps);
+      } catch (err) {
+        res.status(500).send({ errMsg: err.message });
+      }
     })
     .get('/:id', async (req, res) => {
-      const apps = await applicationController.getById(req.body);
-
-      res.send(apps);
+      try {
+        const apps = await applicationController.getById(req.body);
+        res.status(200).send(apps);
+      } catch (err) {
+        res.status(500).send({ errMsg: err.message });
+      }
     })
     .get('/download/:fileName', async (req, res) => {
       const file = req.params.fileName;
@@ -77,6 +83,16 @@ const init = (app, data) => {
       try {
         await applicationController.createApplication(req.body);
         res.status(200).send({ status: 'ok' });
+      } catch (err) {
+        res.status(500).send({ errMsg: err.message });
+      }
+    })
+    .post('/check', async (req, res) => {
+      try {
+        const result = await applicationController
+          .isUserAppliedForJob(req.body.userId, req.body.jobId);
+
+        res.status(200).send(result);
       } catch (err) {
         res.status(500).send({ errMsg: err.message });
       }

@@ -14,6 +14,7 @@ class ApplicationsData extends Data {
         const apps = await this.Model.findAll({
             where: {
                 user_id: userId,
+                isDeleted: 0,
             },
         });
 
@@ -27,6 +28,16 @@ class ApplicationsData extends Data {
                 isDeleted: 0,
             },
             include: [Users],
+        });
+    }
+
+    getApplicationsByUserAndJob(userId, jobId) {
+        return this.Model.findAll({
+            where: {
+                job_offer_id: jobId,
+                user_id: userId,
+                isDeleted: 0,
+            },
         });
     }
 }
