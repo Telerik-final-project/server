@@ -14,6 +14,7 @@ const init = (app, data) => {
     const usersController = new UsersController(data);
 
     const router = new Router();
+
     router
         .get('/users', async (req, res) => {
             const users = await usersController.getAllUsersData();
@@ -63,7 +64,7 @@ const init = (app, data) => {
         })
         .post('/buttons/create', async (req, res) => {
             const newButton = req.body;
-            console.log(newButton);
+
             try {
                 buttonsController.createButton(newButton);
 
@@ -83,30 +84,39 @@ const init = (app, data) => {
 
             const context = { buttonInfoToDisplay };
 
-            res.send(context);
+            res.status(200).send(context);
         })
         .post('/buttons/edit/:id', async (req, res) => {
             const id = +req.params.id;
             const buttonInfo = req.body;
-            console.log(buttonInfo)
-            const info = [...buttonInfo];
 
             try {
-                await buttonsController.updateButton(id, info);
+                await buttonsController.updateButton(id, buttonInfo);
 
-                res.status(200);
+                res.status(200).send({
+                    msg: 'Vsichko e tochno!',
+                });
             } catch (err) {
                 res.status(500).send({
-                    errMsg: 'server error!',
+                    errMsg: 'Server error!',
                 });
                 console.log(err);
             }
         })
         .post('/buttons/delete/:id', async (req, res) => {
-            const id = 1; // will be changed
-            await buttonsController.deleteButton(id);
+            const id = +req.params.id;
+            try {
+                await buttonsController.deleteButton(id);
 
-            res.status(200);
+                res.status(200).send({
+                    msg: 'Button deleted!',
+                });
+            } catch (err) {
+                res.status(500).send({
+                    errMsg: 'Cannot delete this button, server error occur!',
+                    errType: err.message,
+                });
+            }
         });
 
     app.use('/api/admin', router);
@@ -115,3 +125,5 @@ const init = (app, data) => {
 module.exports = {
     init,
 };
+
+
