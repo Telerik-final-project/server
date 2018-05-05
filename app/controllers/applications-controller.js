@@ -54,9 +54,21 @@ class ApplicationsController {
         return true;
     }
 
-    async downloadCv() {}
+    async isUserAppliedForJob(userId, jobId) {
+        let result;
+        try {
+            result = await this.data
+                .applications.getApplicationsByUserAndJob(userId, jobId);
 
-    async downloadCoverLetter() {}
+            if (result.length > 0) {
+                return true;
+            }
+
+            return false;
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = ApplicationsController;
