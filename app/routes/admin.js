@@ -43,27 +43,38 @@ const init = (app, data) => {
                 });
             }
         })
-        .get('/contacts/edit/', async (req, res) => {
-            const id = 1; // will be changed
+        .get('/contacts/edit/:id', async (req, res) => {
+            const id = +req.params.id;
             const contactInfoToDisplay =
                 await contactsController.getContactInfoById(id);
 
             const context = { contactInfoToDisplay };
 
-            res.send(context);
+            res.send(context).status(200);
         })
         .post('/contacts/edit/:id', async (req, res) => {
+            const id = +req.params.id;
             const contactInfo = req.body;
-            const info = [...contactInfo];
-            await contactsController.updateContacts(info);
+            await contactsController.updateContacts(id, contactInfo);
 
-            res.status(200);
+            res.status(200).send({
+                msg: 'Contact edited!',
+            });
         })
         .post('/contacts/delete/:id', async (req, res) => {
-            const id = 1; // will be changed
-            await contactsController.deleteContacts(id);
+            const id = +req.params.id;
+            try {
+                await contactsController.deleteContacts(id);
 
-            res.status(200);
+                res.status(200).send({
+                    msg: 'Button deleted!',
+                });
+            } catch (err) {
+                res.status(500).send({
+                    errMsg: 'Cannot delete this button, server error occur!',
+                    errType: err.message,
+                });
+            }
         })
         .get('/buttons', async (req, res) => {
             const buttons = await buttonsController.getAllButtons();
