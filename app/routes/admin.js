@@ -55,7 +55,8 @@ const init = (app, data) => {
         .post('/contacts/edit/:id', async (req, res) => {
             const id = +req.params.id;
             const contactInfo = req.body;
-            await contactsController.updateContacts(id, contactInfo);
+            console.log(contactInfo);
+            contactsController.updateContacts(id, contactInfo);
 
             res.status(200).send({
                 msg: 'Contact edited!',
@@ -64,7 +65,7 @@ const init = (app, data) => {
         .post('/contacts/delete/:id', async (req, res) => {
             const id = +req.params.id;
             try {
-                await contactsController.deleteContacts(id);
+                contactsController.deleteContacts(id);
 
                 res.status(200).send({
                     msg: 'Button deleted!',
@@ -111,7 +112,7 @@ const init = (app, data) => {
             const buttonInfo = req.body;
 
             try {
-                await buttonsController.updateButton(id, buttonInfo);
+                buttonsController.updateButton(id, buttonInfo);
 
                 res.status(200).send({
                     msg: 'Vsichko e tochno!',
@@ -120,13 +121,12 @@ const init = (app, data) => {
                 res.status(500).send({
                     errMsg: 'Server error!',
                 });
-                console.log(err);
             }
         })
         .post('/buttons/delete/:id', async (req, res) => {
             const id = +req.params.id;
             try {
-                await buttonsController.deleteButton(id);
+                buttonsController.deleteButton(id);
 
                 res.status(200).send({
                     msg: 'Button deleted!',
