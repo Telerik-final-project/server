@@ -30,9 +30,18 @@ const init = (app, data) => {
         })
         .post('/contacts/create', async (req, res) => {
             const newContact = req.body;
-            await contactsController.createContacts(newContact);
+            console.log(newContact)
+            try {
+                await contactsController.createContacts(newContact);
 
-            res.status(200);
+                res.status(200).send({
+                    msg: 'Contact created!',
+                });
+            } catch (err) {
+                res.status(200).send({
+                    errMsg: 'Cannot create this contact!',
+                });
+            }
         })
         .get('/contacts/edit/', async (req, res) => {
             const id = 1; // will be changed
