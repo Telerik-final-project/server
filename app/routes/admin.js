@@ -18,15 +18,13 @@ const init = (app, data) => {
     router
         .get('/users', async (req, res) => {
             const users = await usersController.getAllUsersData();
-            const context = { users };
 
-            res.send(context);
+            res.send(users);
         })
         .get('/contacts', async (req, res) => {
             const contacts = await contactsController.getAllContacts();
-            const context = { contacts };
 
-            res.send(context);
+            res.send(contacts);
         })
         .post('/contacts/create', async (req, res) => {
             const newContact = req.body;
@@ -77,9 +75,8 @@ const init = (app, data) => {
         })
         .get('/buttons', async (req, res) => {
             const buttons = await buttonsController.getAllButtons();
-            const context = { buttons };
 
-            res.send(context);
+            res.send(buttons);
         })
         .post('/buttons/create', async (req, res) => {
             const newButton = req.body;
