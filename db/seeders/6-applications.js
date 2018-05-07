@@ -12,7 +12,7 @@ module.exports = {
           coverLetterUrl: '',
           isDeleted: 0,
           job_offer_id: 1,
-          user_id: 1,
+          user_id: '3424c100-f878-44a5-ad23-0c4f48bfda74',
         },
         {
           id: 2,
@@ -21,7 +21,7 @@ module.exports = {
           coverLetterUrl: 'file-1524692592557-03expressions.en.pdf',
           isDeleted: 0,
           job_offer_id: 1,
-          user_id: 3,
+          user_id: '944d10e7-dabe-42da-a628-6edd1846fc13',
         },
         {
           id: 3,
@@ -30,7 +30,7 @@ module.exports = {
           coverLetterUrl: '',
           isDeleted: 0,
           job_offer_id: 1,
-          user_id: 3,
+          user_id: 'd0756372-dd91-434d-b01f-2b21759c73d8',
         },
       ].map((el) => {
         el.updatedAt = new Date();

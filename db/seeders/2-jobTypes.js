@@ -5,11 +5,11 @@ module.exports = {
     return queryInterface.bulkInsert(
       'JobTypes',
       [
-        { id: 1, jobType: 'IT' },
-        { id: 2, jobType: 'Marketing' },
-        { id: 3, jobType: 'Sales' },
-        { id: 4, jobType: 'Management' },
-        { id: 5, jobType: 'Operations' },
+        { id: 1, jobType: 'IT Department', isDeleted: 0 },
+        { id: 2, jobType: 'Marketing', isDeleted: 0 },
+        { id: 3, jobType: 'Sales', isDeleted: 0 },
+        { id: 4, jobType: 'Management', isDeleted: 0 },
+        { id: 5, jobType: 'Operations', isDeleted: 0 },
       ].map((el) => {
         el.updatedAt = new Date();
         el.createdAt = new Date();
