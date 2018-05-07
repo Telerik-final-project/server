@@ -26,7 +26,6 @@ const init = (app, data) => {
     .get('/:id/applications', async (req, res) => {
       // applicants per id
       const jobId = +req.params.id;
-      console.log(jobId);
       const applicants = await applicationController.getAllApplicationsByJobId(
         jobId,
       );
@@ -45,8 +44,6 @@ const init = (app, data) => {
     .post('/create', async (req, res) => {
       const newJobOffer = req.body;
       let newJob;
-      console.log(app.locals.file);
-      console.log(newJobOffer);
       try {
         newJob = await jobsController.createJobAd(newJobOffer);
         // app.locals.file = null;

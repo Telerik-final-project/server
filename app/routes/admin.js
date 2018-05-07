@@ -30,7 +30,6 @@ const init = (app, data) => {
         })
         .post('/contacts/create', async (req, res) => {
             const newContact = req.body;
-            console.log(newContact)
             try {
                 await contactsController.createContacts(newContact);
 
@@ -55,7 +54,6 @@ const init = (app, data) => {
         .post('/contacts/edit/:id', async (req, res) => {
             const id = +req.params.id;
             const contactInfo = req.body;
-            console.log(contactInfo);
             contactsController.updateContacts(id, contactInfo);
 
             res.status(200).send({
@@ -115,7 +113,7 @@ const init = (app, data) => {
                 buttonsController.updateButton(id, buttonInfo);
 
                 res.status(200).send({
-                    msg: 'Vsichko e tochno!',
+                    msg: 'updated ',
                 });
             } catch (err) {
                 res.status(500).send({

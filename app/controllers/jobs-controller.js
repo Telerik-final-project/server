@@ -12,12 +12,19 @@ class JobsController {
     try {
       ads = await this.data.jobOffers.getAll();
     } catch (err) {
-      console.log(err);
       throw err;
     }
     try {
       ads.map((ad) => {
-        const data = fs.readFileSync(ad.descriptionUrl, 'utf8');
+        const relPath = path.join(
+          __dirname,
+          '..',
+          '..',
+          'uploads',
+          'descriptions',
+          ad.descriptionUrl,
+        );
+        const data = fs.readFileSync(relPath, 'utf8');
         ad.dataValues.description = data;
       });
     } catch (err) {
@@ -33,11 +40,19 @@ class JobsController {
       try {
         ad = await this.data.jobOffers.getById(id);
       } catch (err) {
-        console.log(err);
         throw err;
       }
 
-      fs.readFile(ad.descriptionUrl, 'utf8', (err, data) => {
+      const relPath = path.join(
+        __dirname,
+        '..',
+        '..',
+        'uploads',
+        'descriptions',
+        ad.descriptionUrl,
+      );
+
+      fs.readFile(relPath, 'utf8', (err, data) => {
         if (err) {
           return reject();
         }
@@ -62,16 +77,23 @@ class JobsController {
     try {
       await this.data.jobOffers.update(data.id, data);
     } catch (err) {
-      console.log(err);
       throw err;
     }
 
+    const relPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      'uploads',
+      'descriptions',
+      data.descriptionUrl,
+    );
+
     try {
-      fs.writeFile(data.descriptionUrl, data.description, 'utf8', (err) => {
+      fs.writeFile(relPath, data.description, 'utf8', (err) => {
         if (err) throw err;
       });
     } catch (err) {
-      console.log(err);
       throw err;
     }
 
@@ -81,23 +103,23 @@ class JobsController {
   async createJobAd(data) {
     let newJob;
     const description = data.description;
+    const fileName = new Date().getTime() + '.txt';
     const relPath = path.join(
       __dirname,
       '..',
       '..',
       'uploads',
       'descriptions',
-      new Date().getTime() + '.txt',
+      fileName,
     );
 
     try {
       fs.writeFile(relPath, description, 'utf8', (err) => {
         if (err) throw err;
       });
-      data.descriptionUrl = relPath;
+      data.descriptionUrl = fileName;
       newJob = await this.data.jobOffers.create(data);
     } catch (err) {
-      console.log(err);
       throw err;
     }
 
@@ -108,7 +130,6 @@ class JobsController {
     try {
       await this.data.jobOffers.delete(id);
     } catch (err) {
-      console.log(err);
       throw err;
     }
 

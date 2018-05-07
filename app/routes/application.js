@@ -46,13 +46,8 @@ const init = (app, data) => {
       return res.download(filePath, file);
     })
     .post('/upload-cv', upload.single('file'), (req, res) => {
-      const fileUrl = path.join(
-        __dirname,
-        '..',
-        '..',
-        'uploads',
-        req.file.filename,
-      );
+      const fileUrl = req.file.filename;
+
       app.locals.fileCv = req.file;
       app.locals.fileCv.fileUrl = fileUrl;
       res.json({
@@ -62,13 +57,8 @@ const init = (app, data) => {
       });
     })
     .post('/upload-cover', upload.single('file'), (req, res) => {
-      const fileUrl = path.join(
-        __dirname,
-        '..',
-        '..',
-        'uploads',
-        req.file.filename,
-      );
+      const fileUrl = req.file.filename;
+
       app.locals.fileCover = req.file;
       app.locals.fileCover.fileUrl = fileUrl;
       res

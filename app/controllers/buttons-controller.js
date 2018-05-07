@@ -9,7 +9,6 @@ class ButtonsController {
         try {
             buttons = await this.data.buttons.getAll();
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -22,7 +21,6 @@ class ButtonsController {
         try {
             button = await this.data.buttons.getById(id);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -33,7 +31,6 @@ class ButtonsController {
         try {
             await this.data.buttons.create(data);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -52,7 +49,6 @@ class ButtonsController {
         try {
             await this.data.buttons.update(id, data);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -63,7 +59,6 @@ class ButtonsController {
         try {
             await this.data.buttons.delete(id);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 

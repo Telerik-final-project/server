@@ -9,7 +9,7 @@
     "unit-tests": "./node_modules/.bin/mocha",
     "add-migration": "cd db && node ../node_modules/sequelize-auto-migrations/bin/makemigration.js",
     "migrate": "cd db && ../node_modules/.bin/sequelize db:migrate",
-    "seed": "./node_modules/.bin/sequelize db:seed:all"
+    "seed": "cd db && ../node_modules/.bin/sequelize db:seed:all"
   },
   "repository": {
     "type": "git",

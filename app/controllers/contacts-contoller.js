@@ -9,7 +9,6 @@ class ContactsController {
         try {
             contacts = await this.data.contacts.getAll();
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -22,7 +21,6 @@ class ContactsController {
         try {
             contacts = await this.data.contacts.getById(+id);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -33,7 +31,6 @@ class ContactsController {
         try {
             await this.data.contacts.create(data);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -52,7 +49,6 @@ class ContactsController {
         try {
             await this.data.contacts.update(id, data);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -63,7 +59,6 @@ class ContactsController {
         try {
             await this.data.contacts.delete(id);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 

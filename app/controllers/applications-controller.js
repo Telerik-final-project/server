@@ -9,7 +9,6 @@ class ApplicationsController {
         try {
             applications = await this.data.applications.getAll();
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -23,7 +22,6 @@ class ApplicationsController {
             applications = await this.data.
                 applications.getApplicationsByJobId(jobId);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
@@ -47,7 +45,6 @@ class ApplicationsController {
             await this.data.applications.create(applicationData);
             await this.data.users.update(data.userId, userUpdateData);
         } catch (err) {
-            console.log(err);
             throw err;
         }
 
