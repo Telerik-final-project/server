@@ -14,7 +14,7 @@ Download/clone the repo in you local storage.
 run:
 cd choco-compnay-server
 npm install
-Create a DB
+
 npm run add-migration
 npm run migrate
 npm run seed
