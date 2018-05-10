@@ -62,3 +62,6 @@ db/migrations
 
 # db index
 db/models/index.js
+
+# uploads
+uploads/
